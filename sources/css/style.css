@@ -1,0 +1,332 @@
+html, body {
+	background-color: #EBEBEB !important;
+}
+
+.top10 {
+	margin-top: 10px;
+}
+
+.login-container {
+	width: 600px;
+	float: right;
+}
+
+.logo-container {
+	display: inline-block;
+}
+
+md-tooltip .md-content {
+	background-color: #A94442 !important;
+	font-size: 13px !important;
+}
+
+fieldset.fsStyle {
+    border: 1px solid #C5C0C0;
+    padding: 15px;
+    border-radius: 8px;
+}
+fieldset.fsStyle.motDePasseOubli {
+    height: 220px;
+}
+
+fieldset.fsStyle.motDePasseChange {
+    height: 375px;
+}
+
+fieldset.fsStyle.login,
+fieldset.fsStyle.signup {
+    height: 408px;
+}
+
+.motDePasseOubli {
+	font-size: 12px;
+}
+
+
+.focus {
+	box-shadow: 0px 0px 8px -2px #66AFE9;
+	border-color: #AAC4D8 !important;
+}
+
+.form-group.checkbox-inline {
+	margin-left: 15px !important;
+}
+
+fieldset.fsStyle .row.button {
+	bottom: 15px;
+    position: absolute;
+    width: calc(100% - 30px);
+}
+
+h2.h2-form {
+	margin-bottom: 15px;
+	margin-top: 0px;
+}
+
+.div-table {
+	display: table;
+}
+
+.div-row {
+	display: table-row;
+}
+
+.div-cell {
+	display: table-cell;
+	text-align: left;
+}
+
+.users .div-row.divh {
+	border-top-left-radius: 4px;
+	border-top-right-radius: 4px;
+	background-color: #A09E9E !important;
+}
+
+.w100 {
+	width: 100%;
+}
+
+.adm {
+    background-color: #EA6969 !important;
+}
+
+.user {
+    background-color: #2FB145 !important;
+}
+
+.select {
+	background-color:  #F7F7F7;
+}
+
+.role {
+	display: inline-block;
+	padding-right: 5px;
+}
+
+.users {
+	background-color: #CACACA;
+}
+
+.users .rhc {
+	border-top-right-radius: 6px;
+}
+
+.users .lhc {
+	border-top-left-radius: 6px;
+}
+
+.users .username {
+	width: 150px;
+}
+
+.users .email {
+	width: 200px;
+}
+
+.users .email-confirm {
+	width: 50px;
+}
+
+.users .roles {
+	width: auto;
+}
+
+.users .roles md-checkbox {
+	margin-bottom: 0px !important;
+}
+
+.users .crea,
+.users .derCon {
+	width: 160px;
+}
+
+.users .active {
+	width: 50px;
+}
+
+.users .raz {
+	width: 25px;
+}
+
+.divh span {
+	padding-left: 13px;
+}
+
+.sort {
+	background-image: url(/img/sort.png);
+	background-repeat: no-repeat;
+	outline: none;
+	-webkit-user-select: none;       
+	-moz-user-select: none;
+	-ms-user-select: none;
+}
+
+.sort.sortedAsc {
+	background-image: url(/img/sort.png);
+	background-repeat: no-repeat;
+	background-position-y: -16px;
+}
+
+.sort.sortedDesc {
+	background-image: url(/img/sort.png);
+	background-repeat: no-repeat;
+	background-position-y: -32px;
+}
+
+.users .div-cell {
+	padding: 4px 8px;
+	vertical-align: middle;
+}
+
+.users.div-table {
+	border-radius: 6px;
+}
+
+md-switch {
+	margin: 0 !important;
+}
+
+.error {
+	padding-top: 11px;
+	color: red;
+}
+
+.md-chips .md-chip.select {
+	background-color: white !important;
+    padding-right: 4px !important;
+}
+
+.md-chips .md-chip.noMod {
+	padding-right: 0px !important;
+}
+
+.md-chips .md-chip {
+	height: 18px !important;
+	border-radius: 4px !important;
+	line-height: 21px !important;
+	padding: 0 13px 0 6px !important;
+	margin: 0px 8px 0px 0px !important;
+	font-size: 12px;
+}
+
+.md-chips {
+	font-size: 13px !important;
+	padding: 0 !important;
+}
+
+.md-chips .md-chip .md-chip-remove {
+	width: 16px !important;
+	height: 16px !important;
+	top: 1px;
+	right: 2px;
+	padding-right: 2px !important;
+	outline: none;
+}
+
+.md-chips .md-chip-input-container {
+	display: none !important;
+}
+
+md-chip {
+	outline: none !important;
+}
+
+md-chip.selectable {
+	cursor: pointer !important;
+}
+
+md-chip.selectable.selected {
+	box-shadow: 0px 0px 1px 2px #757474 !important;
+}
+
+md-chips {
+	display: inline-block;
+	vertical-align: middle;
+}
+
+md-chips.md-default-theme .md-chips, md-chips .md-chips {
+	box-shadow: none !important;
+}
+
+md-chips.md-default-theme .md-chip.md-focused, md-chips .md-chip.md-focused {
+	background: rgb(224,224,224) !important;
+	color: inherit !important;
+}
+
+md-chips.md-default-theme .md-chip.md-focused md-icon, md-chips .md-chip.md-focused md-icon {
+	color: rgba(0,0,0,0.54) !important;
+}
+
+.md-chips .md-chip .md-chip-content {
+	padding-right: 7px;
+}
+
+.md-chips select.md-chip {
+	background-color: white;
+    height: 22px;
+    border: none;
+    outline: none;
+    margin-left: -9px !important;
+}
+
+.md-chips .md-chip.select .md-chip-content {
+	padding-right: 0px !important;
+}
+
+.users .dropdown {
+	height: 18px;
+	vertical-align: middle;
+}
+
+.addBtn {
+	border: none;
+    width: 18px;
+    height: 18px;
+    border-radius: 4px;
+    outline: none;
+    padding: 0;
+    margin-top: 1px;
+    background-color: white;
+}
+
+.addBtn md-icon {
+    width: 20px !important;
+    height: 20px !important;
+    margin-top: -5px;
+    margin-left: -1px;
+}
+
+.nopadding {
+	padding: 0 !important;
+}
+
+.btn-mini button {
+	width: 20px !important;
+	height: 20px !important;
+	min-height: 20px !important;
+}
+
+.btn-mini button:not([disabled="disabled"]) md-icon {
+	display: inline;
+	color: rgba(255, 255, 255, 0.61) !important;
+}
+
+.btn-mini .md-button {
+	padding: 2px 0;
+}
+
+.pagination > li > a, 
+.pagination > li > span {
+	background-color: #CACACA !important;
+	color: #424450 !important;
+}
+
+.pagination > .active > a, 
+.pagination > .active > span, 
+.pagination > .active > a:hover, 
+.pagination > .active > span:hover, 
+.pagination > .active > a:focus, 
+.pagination > .active > span:focus {
+	background-color: #A09E9E !important;
+	border-color: #A09E9E !important;
+}
