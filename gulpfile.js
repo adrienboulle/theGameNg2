@@ -1,98 +1,76 @@
 var gulp = require('gulp');
-var clean = require('gulp-clean');
-var runSequence = require('run-sequence');
-var inject = require('gulp-inject');
-var uglify = require('gulp-uglify');
-var uglifycss = require('gulp-uglifycss');
-var concat = require('gulp-concat');
-var series = require('stream-series');
-var gulpUtil = require('gulp-util');
-var es = require('event-stream');
-var merge = require('merge-stream');
-var angularFilesort = require('gulp-angular-filesort');
-var rename = require('gulp-rename');
-var mainBowerFiles = require('main-bower-files');
 
-var conf = {
-	prod: !!gulpUtil.env.production
-}
+var assetsDev = 'client/assets/';
+var assetsProd = 'client/src/';
 
+var appDev = 'client/dev/';
+var appProd = 'client/app/';
 
-// supprime tout ce qui se trouve dans le dossier public
-gulp.task('clean', function () {
-	return gulp.src('./public', {read: false})
-		.pipe(clean());
+var browserSync = require('browser-sync').create();
+
+/* Mixed */
+var ext_replace = require('gulp-ext-replace');
+
+/* CSS */
+var postcss = require('gulp-postcss');
+var sourcemaps = require('gulp-sourcemaps');
+var autoprefixer = require('autoprefixer');
+var precss = require('precss');
+var cssnano = require('cssnano');
+
+/* JS & TS */
+var jsuglify = require('gulp-uglify');
+var typescript = require('gulp-typescript');
+
+/* Images */
+var imagemin = require('gulp-imagemin');
+
+var tsProject = typescript.createProject('tsconfig.json');
+
+gulp.task('build-css', function () {
+	return gulp.src(assetsDev + 'scss/*.scss')
+		.pipe(sourcemaps.init())
+		.pipe(postcss([precss, autoprefixer, cssnano]))
+		.pipe(sourcemaps.write())
+		.pipe(ext_replace('.css'))
+		.pipe(gulp.dest(assetsProd + 'css/'));
 });
 
-// gère les imports de bower 
-gulp.task("bower-files", function() {
-    return gulp.src(mainBowerFiles())
-    	.pipe(gulp.dest("./public/imports"));
+gulp.task('build-ts', function () {
+	return gulp.src(appDev + '**/*.ts')
+		.pipe(sourcemaps.init())
+		.pipe(typescript(tsProject))
+		.pipe(sourcemaps.write())
+		//.pipe(jsuglify())
+		.pipe(gulp.dest(appProd));
 });
 
-// gère les imports de l'app
-gulp.task('import', function () {
-	
-	gulp.src('./sources/index.html')
-		.pipe(gulp.dest('./public/'));
-
-	var svgStream = gulp.src(['./sources/svg/**/*.svg'])
- 		.pipe(gulp.dest('./public/svg/'));
-
- 	var pngStream = gulp.src(['./sources/img/**/*.png'])
- 		.pipe(gulp.dest('./public/img/'));
-
-	var htmlStream = gulp.src(['./sources/js/app/**/*.html'])
- 		.pipe(gulp.dest('./public/js/app/'));
-
- 	var cssStream = gulp.src(['./sources/css/**/*.css'])
- 		.pipe(conf.prod ? concat('style.css') : gulpUtil.noop())
- 		.pipe(conf.prod ? uglifycss() : gulpUtil.noop())
- 		.pipe(gulp.dest('./public/css/'));
-		
-	var jsStream = gulp.src(['./sources/js/**/*.js'])
-		.pipe(angularFilesort())
-		.pipe(conf.prod ? concat('app.js') : gulpUtil.noop())
- 		.pipe(conf.prod ? uglify().on('error', gulpUtil.log) : gulpUtil.noop())
-		.pipe(gulp.dest('./public/js/'));
-				
-	return merge(svgStream, pngStream, jsStream, cssStream, htmlStream);
-		
+gulp.task('build-img', function () {
+	return gulp.src(assetsDev + 'img/**/*')
+		.pipe(imagemin({
+			progressive: true
+		}))
+		.pipe(gulp.dest(assetsProd + 'img/'));
 });
 
-gulp.task('inject', function () {
-	var target = gulp.src('./public/index.html');
-
-  	var cssStream = gulp.src(['./public/**/*.css']);
-
-	var pathJsJQ = ['./public/imports/**/jquery*.js'];
-	var pathJsAngular = ['./public/imports/**/angular.js'];
-	var pathJsDep = ['./public/imports/**/*.js', '!./public/imports/**/angular.js', '!./public/imports/**/jquery*.js'];
-
-	var jsJq = gulp.src(pathJsJQ);
-
-	var jsAng = gulp.src(pathJsAngular);
-	
-	var jsDepStream = gulp.src(pathJsDep)
-		.pipe(conf.prod ? concat('imports.js') : gulpUtil.noop());
-
-	var jsAppStream = gulp.src(['./public/js/app/**/*.js']);
-		
-	return target
-		.pipe(inject(cssStream, {relative: true}))
-		.pipe(inject(series(jsJq, jsAng, jsDepStream, jsAppStream), {relative: true}))
-    	.pipe(gulp.dest('./public/'));
+gulp.task('build-html', function () {
+	return gulp.src(appDev + '**/*.html')
+		.pipe(gulp.dest(appProd));
 });
 
-gulp.task('build', function(callback) {
-	runSequence(
-		'clean',
-		'bower-files',
-        'import',
-		'inject',
-        callback);
-	
-	gulp.watch('sources/**/*', ['build']);
+gulp.task('watch', function () {
+	gulp.watch(appDev + '**/*.ts', ['build-ts']);
+	gulp.watch(assetsDev + 'scss/**/*.scss', ['build-css']);
+	gulp.watch(assetsDev + 'img/*', ['build-img']);
 });
 
-gulp.task('default', ['build']);var gulp = require('gulp');
+gulp.task('browser-sync', function() {
+	return browserSync.init(null, {
+		proxy: "http://localhost:8085",
+		files: [assetsProd + '**/*.css', appProd + '*', appDev + "**/*.html"],
+		port: 7000,
+		open: false
+	});
+});
+
+gulp.task('default', ['browser-sync', 'watch', 'build-ts', 'build-css', 'build-img']);

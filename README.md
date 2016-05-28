@@ -1,3 +1,3 @@
-# theGameNg2
+# theGame
 
-Angular2js + NodeJs app
+Angularjs + NodeJs app

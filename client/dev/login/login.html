@@ -1,0 +1,180 @@
+<div class="container">
+	<div class="row">
+		<div class="col-md-12">
+			<div class="row">
+				<div class="logo-container">
+					<img src="/client/src/img/logo.png">
+				</div>
+				<div class="login-container">
+					<div class="col-md-6">
+						<!-- SIGNIN FORM -->
+						<form [ngFormModel]="userSigninForm" novalidate>
+							<fieldset class="login fsStyle" [ngClass]="{focus: signinFocus}">
+								<h2 class="h2-form">S'identifier</h2>
+								<div class="row">
+									<div class="form-group col-md-12">
+										<label>Nom d'utilisateur</label>
+										<input
+											(focus)="signinFocus = true; signupFocus = false"
+											[ngFormControl]="userSigninForm.controls['username']"
+											class="form-control"
+											type="text"
+											placeholder="Entrer nom d'utilisateur"
+											(ngKeyup)="$event.keyCode == 13 && login()" />
+									</div>
+								</div>
+								<div class="row">
+									<div class="form-group col-md-12">
+										<label>Mot de passe</label>
+										<input
+											(focus)="signinFocus = true; signupFocus = false"
+											[ngFormControl]="userSigninForm.controls['password']"
+											class="form-control"
+											type="password"
+											placeholder="Entrer mot de passe"
+											(ngKeyup)="$event.keyCode == 13 && login()" />
+										<!--TODO: route vers motDePasseOubli-->
+										<p class="text-right motDePasseOubli"><a ui-sref="site.login.motDePasseOubli">Mot de passe oublié ?</a></p>
+									</div>
+								</div>
+								<div class="row">
+									<div class="form-group col-md-12 checkbox-inline">
+										<!--TODO: implémenter la fonctionalité rester connecté -->
+										<input
+											(focus)="signinFocus = true; signupFocus = false"
+											type="checkbox"/>
+										<label>Rester connecté</label>
+									</div>
+								</div>
+								<div class="row">
+									<div class="form-group col-md-12 text-center error">
+										<span>{{erreurLogin}}</span>
+									</div>
+								</div>
+								<div class="row button text-center">
+									<div class="col-md-12">
+										<button
+											(focus)="signinFocus = true; signupFocus = false"
+											type="submit"
+											class="btn btn-primary"
+											(click)="login()">Se connecter
+										</button>
+									</div>
+								</div>
+							</fieldset>
+						</form>
+					</div>
+					<div class="col-md-6">
+						<!-- SIGNUP FORM -->
+						<form [ngFormModel]="userSignupForm" novalidate>
+							<fieldset class="signup fsStyle" [ngClass]="{focus: signupFocus}">
+								<h2 class="h2-form">S'enregistrer</h2>
+								<!-- USERNAME -->
+								<div class="row">
+									<div class="form-group col-md-12" [ngClass]="{'has-error': !userSignupControlUsername.valid && !userSignupControlUsername.pristine && signupFocus}">
+										<label>Nom d'utilisateur</label>
+										<div remove-handlers>
+											<input
+												(focus)="signupFocus = true; signinFocus = false"
+												[ngFormControl]="userSignupForm.controls['username']"
+												class="form-control"
+												type="text"
+												placeholder="Entrer nom d'utilisateur"
+												(keyup)="$event.keyCode == 13 && signup()" />
+											<md-tooltip md-direction="right" md-visible="userSignupForm.username.$error.required && !userSignupForm.username.pristine && signupFocus">
+												Nom d'utilisateur requis
+											</md-tooltip>
+											<md-tooltip md-direction="right" md-visible="userSignupForm.username.$error.uniqueUsername && !userSignupForm.username.pristine && signupFocus">
+												Ce nom d'utilisateur est déjà pris
+											</md-tooltip>
+											<md-tooltip md-direction="right" md-visible="userSignupForm.controls.username.$error.minlength && !userSignupForm.controls.username.pristine && signupFocus">
+												Nom d'utilisateur trop court
+											</md-tooltip>
+											<md-tooltip md-direction="right" md-visible="userSignupForm.controls.username.$error.maxlength && !userSignupForm.controls.username.pristine && signupFocus">
+												Nom d'utilisateur trop long
+											</md-tooltip>
+										</div>
+									</div>
+								</div>
+								<!-- EMAIL -->
+								<div class="row">
+									<div class="form-group col-md-12" [ngClass]="{'has-error': !userSignupControlEmail.valid && !userSignupControlEmail.pristine && signupFocus}">
+										<label>Email</label>
+										<div remove-handlers>
+											<input
+												(focus)="signupFocus = true; signinFocus = false"
+												[ngFormControl]="userSignupForm.controls['email']"
+												class="form-control"
+												type="email"
+												placeholder="Entrer votre email"
+												(ngKeyup)="$event.keyCode == 13 && signup()" />
+											<md-tooltip md-direction="right" md-visible="userSignupForm.controls.email.$error.required && !userSignupForm.controls.email.pristine && signupFocus">
+												Email requis
+											</md-tooltip>
+											<md-tooltip md-direction="right" md-visible="userSignupForm.controls.email.$error.uniqueEmail && !userSignupForm.controls.email.pristine && signupFocus">
+												Cet email est déjà pris
+											</md-tooltip>
+											<md-tooltip md-direction="right" md-visible="userSignupForm.controls.email.$error.pattern && !userSignupForm.controls.email.pristine && signupFocus">
+												Email invalide
+											</md-tooltip>
+										</div>
+									</div>
+								</div>
+								<!-- PASSWORD -->
+								<div class="row">
+									<div class="form-group col-md-12" [ngClass]="{'has-error': !userSignupControlPassword.valid && !userSignupControlPassword.pristine && signupFocus}">
+										<label>Mot de passe</label>
+										<div remove-handlers>
+											<input
+												(focus)="signupFocus = true; signinFocus = false"
+												[ngFormControl]="userSignupForm.controls['password']"
+												class="form-control"
+												type="password"
+												placeholder="Entrer mot de passe"
+												(ngKeyup)="$event.keyCode == 13 && signup()" />
+											<md-tooltip md-direction="right" md-visible="userSignupForm.controls.password.$error.required && !userSignupForm.controls.password.pristine && signupFocus">
+												Mot de passe requis
+											</md-tooltip>
+											<md-tooltip md-direction="right" md-visible="userSignupForm.controls.password.$error.minlength && !userSignupForm.controls.password.pristine && signupFocus">
+												Mot de passe trop court
+											</md-tooltip>
+										</div>
+									</div>
+								</div>
+								<!-- PASSWORD CONFIRMATION -->
+								<div class="row">
+									<div class="form-group col-md-12" [ngClass]="{'has-error': !userSignupControlPasswordConfirmation.valid && userSignupControlPassword.valid && !userSignupControlPasswordConfirmation.pristine && signupFocus}">
+										<label>Confirmation du mot de passe</label>
+										<div remove-handlers>
+											<input
+												(focus)="signupFocus = true; signinFocus = false"
+												[ngFormControl]="userSignupForm.controls['passwordConfirmation']"
+												class="form-control"
+												type="password"
+												placeholder="Confirmer mot de passe"
+												(ngKeyup)="$event.keyCode == 13 && signup()" />
+											<md-tooltip md-direction="right" md-visible="userSignupForm.controls.passwordConfirmation.$error.required && !userSignupForm.controls.passwordConfirmation.pristine && signupFocus">
+												Veuillez confirmer votre mot de passe
+											</md-tooltip>
+											<md-tooltip md-direction="right" md-visible="userSignupForm.controls.passwordConfirmation.$error.match && !userSignupForm.controls.password.$invalid && !userSignupForm.controls.passwordConfirmation.pristine && signupFocus">
+												Les mots de passes sont différents
+											</md-tooltip>
+										</div>
+									</div>
+								</div>
+								<div class="row button text-center">
+									<button
+										(focus)="signupFocus = true; signinFocus = false"
+										type="submit"
+										class="btn btn-primary"
+										ng-click="signup()">S'enregistrer
+									</button>
+								</div>
+							</fieldset>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
