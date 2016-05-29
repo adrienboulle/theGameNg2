@@ -413,7 +413,7 @@ module.exports = function(app, passport, role) {
 											}
 											mailUtils.sendMail(mail, function(err, info) {
 												if (err) {
-													// todo si pb mail
+													console.log(err);
 												}
 											});
 											done(err, user);

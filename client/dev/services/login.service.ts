@@ -1,12 +1,14 @@
 import {Injectable} from "angular2/core";
 import {Http, Headers, RequestOptions} from "angular2/http";
 import 'rxjs/add/operator/map';
+import {Observable} from "rxjs/Observable";
+import {UserService} from "./user.service";
 
 @Injectable()
 export class LoginService {
 
-	constructor(private _http: Http) {}
-	
+	constructor(private _http: Http, private _userService: UserService) {}
+
 	login(loginData) {
 		let _body = JSON.stringify(loginData),
 			_headers = new Headers({'Content-Type': 'application/json'}),
@@ -20,9 +22,16 @@ export class LoginService {
 	};
 
 	logout() {
-		return this._http
-			.delete('/api/login')
-			.map(res => res);
+		return Observable.create(observer => {
+			this._http
+				.delete('/api/login')
+				.map(res => res)
+				.subscribe(res => {
+					this._userService.init();
+					observer.next(true);
+					observer.complete();
+				});
+		});
 	};
 	
 }

@@ -7,18 +7,19 @@
                         <a class="navbar-brand">GAB</a>
                     </div>
                     <ul class="nav navbar-nav">
-                        <li [class.active]="router.isRouteActive(router.generate(['Login']))">
+                        <li [class.hidden]="userService.isAuthenticatedSync()" [class.active]="router.isRouteActive(router.generate(['Login']))">
+                            <a [routerLink]="['Login']">Login</a>
+                        </li>
+                        <li [class.hidden]="!userService.isAuthenticatedSync()" [class.active]="router.isRouteActive(router.generate(['Accueil']))">
                             <a [routerLink]="['Accueil']">Accueil</a>
                         </li>
-                        <li
-                                ui-sref-active="active">
+                        <li ui-sref-active="active">
                             <a>Page 1</a>
                         </li>
-                        <li
-                                ui-sref-active="active">
+                        <li ui-sref-active="active">
                             <a>Page 2</a>
                         </li>
-                        <li [class.active]="router.isRouteActive(router.generate(['Users']))"
+                        <li [hasAnyRole]="['ROLE_ADM', 'ROLE_SUPER_ADM']" [class.active]="router.isRouteActive(router.generate(['Users']))"
                             has-level="10">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                 Admin
@@ -42,9 +43,9 @@
                             </ul>
                         </li>
                     </ul>
-                    <!--<ul class="nav navbar-nav navbar-right">-->
-                    <!--<li is-auth="true"><a>Hello {{user.username}} !</a></li>-->
-                    <!--</ul>-->
+                    <ul [class.hidden]="!userService.isAuthenticatedSync()" class="nav navbar-nav navbar-right">
+                        <li is-auth="true"><a>Hello {{user.username}} !</a></li>
+                    </ul>
                 </div>
             </nav>
         </div>

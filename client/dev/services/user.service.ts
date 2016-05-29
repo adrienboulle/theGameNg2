@@ -5,12 +5,16 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/share';
 import 'rxjs/observable/of';
 import {Observable} from "rxjs/Rx";
+import {Subject} from "rxjs/Subject";
 
 @Injectable()
 export class UserService {
 
 	private userData: UserData;
 	private observable: Observable;
+
+	private userChangedSource: Subject<UserData> = new Subject<UserData>();
+	userChanged$ = this.userChangedSource.asObservable();
 
 	constructor(private _http: Http) {}
 
@@ -29,7 +33,9 @@ export class UserService {
 				.get('/api/login')
 				.map(response => {
 					this.observable = null;
-					this.userData = response.json();
+					var data = response.json();
+					this.userData = new UserData(data.isAuthenticated, data.user.roles, data.user.level, data.user.username);
+					this.userChangedSource.next(this.userData);
 					return this.userData;
 				})
 				.share();
@@ -95,7 +101,7 @@ export class UserService {
 	private rsInRs = function (rsCands, rss) {
 		for (var i = 0; i < rsCands.length; i++) {
 			for (var j = 0; j < rss.length; j++) {
-				if (rss[j]._id === rsCands[i]._id) {
+				if (rss[j] === rsCands[i].alias) {
 					return true;
 				}
 			}

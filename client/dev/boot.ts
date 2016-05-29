@@ -4,5 +4,6 @@ import {ROUTER_PROVIDERS} from "angular2/router";
 import {UserService} from "./services/user.service";
 import {HTTP_PROVIDERS} from "angular2/http";
 import {LoginService} from "./services/login.service";
+import {SignupService} from "./services/signup.service";
 
-bootstrap(AppComponent, [ROUTER_PROVIDERS, HTTP_PROVIDERS, UserService, LoginService]);
+bootstrap(AppComponent, [ROUTER_PROVIDERS, HTTP_PROVIDERS, UserService, LoginService, SignupService]);
