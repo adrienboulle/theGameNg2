@@ -25,7 +25,7 @@
     "gulp-uglifycss": "^1.0.6",
     "gulp-usemin": "^0.3.21",
     "gulp-watch": "^4.3.5",
-    "jquery": "^2.2.4",
+    "jquery": "^3.4.0",
     "main-bower-files": "^2.11.1",
     "mongoose": "^4.4.7",
     "ng2-bootstrap": "^1.0.16",
