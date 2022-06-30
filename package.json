@@ -30,7 +30,7 @@
     "mongoose": "^4.4.7",
     "ng2-bootstrap": "^1.0.16",
     "nodemailer": "^2.3.0",
-    "passport": "^0.3.2",
+    "passport": "^0.6.0",
     "passport-local": "^1.0.0",
     "passport.socketio": "^3.6.1",
     "redis": "^2.6.0-1",
