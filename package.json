@@ -7,7 +7,7 @@
     "angular2": "^2.0.0-beta.17",
     "batch-stream2": "^0.1.3",
     "body-parser": "^1.15.0",
-    "bootstrap": "^3.3.6",
+    "bootstrap": "^4.0.0",
     "connect-redis": "^3.0.2",
     "cookie-parser": "^1.4.1",
     "crypto": "^0.0.3",
